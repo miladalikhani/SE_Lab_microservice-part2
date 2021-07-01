@@ -16,13 +16,16 @@ def load_endpoints():
     global endpoints
     endpoints = data
 
-@circuit
+
 def send_request(endpoint, headers):
     if request.method == 'GET':
         res = requests.get(endpoint, headers=headers)
         return res
     elif request.method == 'POST':
         res = requests.post(endpoint, headers=headers, json=request.json)
+        return res
+    elif request.method == 'PUT':
+        res = requests.put(endpoint,headers=headers, json=request.json)
         return res
 
 
@@ -40,7 +43,7 @@ def hello():
     return "hello world"
 
 
-@app.route('/<path:path>', methods=['GET', 'POST'])
+@app.route('/<path:path>', methods=['GET', 'POST', 'PUT'])
 def gateway(path):
     global endpoints
     if path in endpoints:
@@ -49,6 +52,7 @@ def gateway(path):
         auth_res = authenticate()
         if auth_res.status_code in [200, 201]:
             headers['username'] = auth_res.json()['username']
+            headers['role'] = auth_res.json()['role']
         for k, v in request.headers:
             headers[k] = v
         try:
