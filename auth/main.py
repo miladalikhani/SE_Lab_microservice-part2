@@ -8,7 +8,7 @@ secret_key = "very_secret"
 
 app = Flask(__name__)
 
-create_profile_endpoint = "http://localhost:8082/api/create_profile"
+create_profile_endpoint = "http://localhost:8082/api/profile/create_profile"
 
 
 @app.before_first_request

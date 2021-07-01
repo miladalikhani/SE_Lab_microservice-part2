@@ -15,7 +15,7 @@ def initialize():
 def teardown(exception):
     close_connection()
 
-@app.route('/api/view_profile')
+@app.route('/api/profile/view_profile')
 def view_profile():
     headers = request.headers
     if 'username' not in headers or 'role' not in headers:
@@ -32,7 +32,7 @@ def view_profile():
             return res
 
 
-@app.route('/api/create_profile', methods=['POST'])
+@app.route('/api/profile/create_profile', methods=['POST'])
 def create_profile():
     if not request.json:
         abort(406)
@@ -53,7 +53,7 @@ def create_profile():
         abort(500)
 
 
-@app.route("/api/update_profile", methods=['PUT'])
+@app.route("/api/profile/update_profile", methods=['PUT'])
 def update_user_profile():
     headers = request.headers
     if 'username' not in headers or 'role' not in headers:
@@ -76,7 +76,7 @@ def update_user_profile():
         return res
 
 
-@app.route("/api/profiles")
+@app.route("/api/profile/profiles")
 def see_profiles():
     headers = request.headers
     if 'username' not in headers or 'role' not in headers:

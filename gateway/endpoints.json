@@ -1,9 +1,10 @@
 {
   "auth/login" : "http://localhost:8081/auth/login",
   "auth/signup" : "http://localhost:8081/auth/signup",
-  "api/view_profile" : "http://localhost:8082/api/view_profile",
+  "api/profile/view_profile" : "http://localhost:8082/api/profile/view_profile",
   "auth/authenticate" : "http://localhost:8081/auth/authenticate",
-  "api/update_profile" : "http://localhost:8082/api/update_profile",
-  "api/profiles" : "http://localhost:8082/api/profiles"
+  "api/profile/update_profile" : "http://localhost:8082/api/profile/update_profile",
+  "api/profile/profiles" : "http://localhost:8082/api/profile/profiles",
+  "api/book/create_book" : "http://localhost:8083/api/book/create_book"
 }
 
