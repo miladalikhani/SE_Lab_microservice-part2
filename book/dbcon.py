@@ -54,12 +54,36 @@ def is_book_exists(name, category):
         return False
     return True
 
+
+def get_book_by_id(id):
+    res = query_db("""
+    select name, category from books
+    where id = ? ;
+    """, [id], one=True)
+    return res
+
+
+def update_book(id, name, category):
+    query_db("""
+    update books set name = ? , category = ?
+    where id = ?
+    """, [name, category, id], commit=True)
+
+
+def delete_book(id):
+    query_db("""
+    delete from books 
+    where id = ?
+    """, [id], commit=True)
+
 def add_book(name, category):
-    try:
         query_db("""
         insert into books (name, category)
         values ( ? , ? );
         """, [name, category], commit=True)
-        return True
-    except:
-        return False
+        res = query_db("""
+        select * from books
+        where name like ? 
+        and category like ?
+        """, [name, category], one=True)
+        return res

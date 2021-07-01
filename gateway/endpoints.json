@@ -5,6 +5,8 @@
   "auth/authenticate" : "http://localhost:8081/auth/authenticate",
   "api/profile/update_profile" : "http://localhost:8082/api/profile/update_profile",
   "api/profile/profiles" : "http://localhost:8082/api/profile/profiles",
-  "api/book/create_book" : "http://localhost:8083/api/book/create_book"
+  "api/book/create_book" : "http://localhost:8083/api/book/create_book",
+  "api/book/update_book" : "http://localhost:8083/api/book/update_book",
+  "api/book/remove_book" : "http://localhost:8083/api/book/remove_book"
 }
 

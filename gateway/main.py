@@ -27,6 +27,9 @@ def send_request(endpoint, headers):
     elif request.method == 'PUT':
         res = requests.put(endpoint,headers=headers, json=request.json)
         return res
+    elif request.method == 'DELETE':
+        res = requests.delete(endpoint,headers=headers, json=request.json)
+        return res
 
 
 def authenticate():
@@ -43,7 +46,7 @@ def hello():
     return "hello world"
 
 
-@app.route('/<path:path>', methods=['GET', 'POST', 'PUT'])
+@app.route('/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def gateway(path):
     global endpoints
     if path in endpoints:
