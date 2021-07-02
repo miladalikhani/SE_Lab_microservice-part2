@@ -1,0 +1,4 @@
+{
+  "create_profile" : "http://localhost:8082/api/profile/create_profile"
+}
+

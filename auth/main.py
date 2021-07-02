@@ -8,7 +8,7 @@ secret_key = "very_secret"
 
 app = Flask(__name__)
 
-create_profile_endpoint = "http://localhost:8082/api/profile/create_profile"
+mesh_endpoint = "http://localhost:8090/mesh"
 
 
 @app.before_first_request
@@ -82,7 +82,10 @@ def signup():
         user_profile = {'username': username, 'first_name': first_name, 'last_name': last_name}
 
         try:
-            create_profile_response = requests.post(create_profile_endpoint, json=user_profile)
+            headers = {}
+            headers['token'] = 'mesh'
+            headers['request'] = 'create_profile'
+            create_profile_response = requests.post(mesh_endpoint, headers=headers, json=user_profile)
         except:
             delete_auth_user(username, password)
             abort(500)
