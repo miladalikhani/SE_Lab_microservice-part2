@@ -60,13 +60,27 @@ def view_user_orders(username):
     res = query_db("""
     select book_name, price, checkout_date from orders
     where username like ?
+    and status not like "cancel"
     order by checkout_date desc;
     """, [username])
     return res
 
 def view_all_orders():
     res = query_db("""
-    select username, book_id, book_name, price, checkout_date from orders
+    select id as order_id, username, book_id, book_name, price, status, checkout_date from orders
     order by username, checkout_date desc;
     """, [])
+    return res
+
+def change_order_status(order_id, status):
+    res = query_db("""
+    update orders set status = ? 
+    where id = ? ;
+    """, [status, order_id], commit=True)
+
+def get_order_by_id(order_id):
+    res = query_db("""
+    select * from orders
+    where id = ? ;
+    """, [order_id], one=True)
     return res

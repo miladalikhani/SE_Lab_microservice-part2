@@ -12,6 +12,7 @@
   "api/book/search" : "http://localhost:8083/api/book/search",
   "api/orders/submit_order" : "http://localhost:8084/api/orders/submit_order",
   "api/orders/my_orders" : "http://localhost:8084/api/orders/my_orders",
-  "api/orders/all" : "http://localhost:8084/api/orders/all"
+  "api/orders/all" : "http://localhost:8084/api/orders/all",
+  "api/orders/change_order_status" : "http://localhost:8084/api/orders/change_order_status"
 }
 

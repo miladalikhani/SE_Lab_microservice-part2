@@ -1,7 +1,8 @@
 from flask import Flask, abort, request, make_response, jsonify
 import requests
 
-from orders.dbcon import submit_new_order, initialize_db, close_connection, view_user_orders, view_all_orders
+from orders.dbcon import submit_new_order, initialize_db, close_connection, view_user_orders, view_all_orders, \
+    get_order_by_id, change_order_status
 
 app = Flask(__name__)
 
@@ -64,6 +65,7 @@ def view_my_order():
     except:
         abort(500)
 
+
 @app.route("/api/orders/all")
 def all_orders():
     headers = request.headers
@@ -76,6 +78,36 @@ def all_orders():
         return jsonify(res)
     except:
         abort(500)
+
+
+@app.route('/api/orders/change_order_status', methods=['PUT'])
+def change_status():
+    headers = request.headers
+    if 'username' not in headers or 'role' not in headers:
+        abort(401)
+    if headers['role'] != 'admin':
+        abort(401)
+    if not request.json:
+        abort(406)
+
+    data = request.json
+    if not data.get('order_id') or not data.get('status'):
+        abort(406)
+
+    order_id = data.get('order_id')
+    new_status = data.get('status')
+
+    if new_status not in ['submit', 'delivered', 'cancel']:
+        abort(406)
+    if get_order_by_id(order_id) is None:
+        abort(406)
+
+    try:
+        change_order_status(order_id, new_status)
+        return jsonify({})
+    except:
+        abort(500)
+
 
 if __name__ == '__main__':
     app.run(port=8084)
