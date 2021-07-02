@@ -27,17 +27,19 @@ def create_book():
     if not request.json:
         abort(406)
     book_data = request.json
-    if not book_data.get('name') or not book_data.get('category'):
+    if not book_data.get('name') or not book_data.get('category') or not book_data.get('price'):
         abort(406)
     book_name = book_data.get('name')
     book_category = book_data.get('category')
+    book_price = book_data.get('price')
     if is_book_exists(book_name, book_category):
         abort(409)
 
     try:
-        book = add_book(book_name, book_category)
+        book = add_book(book_name, book_category,book_price)
         return jsonify(book)
     except:
+
         abort(500)
 
 
@@ -51,15 +53,16 @@ def modify_book():
     if not request.json:
         abort(406)
     book_data = request.json
-    if not book_data.get('id') or not book_data.get('name') or not book_data.get('category'):
+    if not book_data.get('id') or not book_data.get('name') or not book_data.get('category') or not book_data.get('price'):
         abort(406)
     book_id = book_data.get('id')
     book_name = book_data.get('name')
     book_category = book_data.get('category')
+    book_price = book_data.get('price')
     if get_book_by_id(book_id) is None:
         abort(406)
     try:
-        update_book(book_id,book_name,book_category)
+        update_book(book_id, book_name, book_category, book_price)
         return jsonify({})
     except:
         abort(500)

@@ -39,7 +39,8 @@ def initialize_db():
     (
         id integer primary key,
         name text not null,
-        category text not null
+        category text not null,
+        price integer
     );
     """)
 
@@ -63,11 +64,11 @@ def get_book_by_id(id):
     return res
 
 
-def update_book(id, name, category):
+def update_book(id, name, category, price):
     query_db("""
-    update books set name = ? , category = ?
+    update books set name = ? , category = ?, price = ?
     where id = ?
-    """, [name, category, id], commit=True)
+    """, [name, category, price, id], commit=True)
 
 
 def delete_book(id):
@@ -76,12 +77,14 @@ def delete_book(id):
     where id = ?
     """, [id], commit=True)
 
+
 def get_books_of_category(category):
     res = query_db("""
-    select id, name from books
+    select * from books
     where category = ?
     """, [category])
     return res
+
 
 def find_book(name):
     res = query_db("""
@@ -90,14 +93,16 @@ def find_book(name):
     """, ['%' + name + '%'])
     return res
 
-def add_book(name, category):
-        query_db("""
-        insert into books (name, category)
-        values ( ? , ? );
-        """, [name, category], commit=True)
-        res = query_db("""
+
+def add_book(name, category, price):
+    print (name, category, price)
+    query_db("""
+        insert into books (name, category, price)
+        values ( ? , ? , ?);
+        """, [name, category, price], commit=True)
+    res = query_db("""
         select * from books
         where name like ? 
         and category like ?
         """, [name, category], one=True)
-        return res
+    return res
