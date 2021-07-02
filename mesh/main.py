@@ -32,11 +32,6 @@ def send_request(endpoint):
         return res
 
 
-@app.route('/')
-def hello():
-    return "hello world"
-
-
 @app.route('/mesh', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def mesh():
     global endpoints

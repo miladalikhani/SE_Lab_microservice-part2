@@ -34,12 +34,10 @@ def create_book():
     book_price = book_data.get('price')
     if is_book_exists(book_name, book_category):
         abort(409)
-
     try:
         book = add_book(book_name, book_category,book_price)
         return jsonify(book)
     except:
-
         abort(500)
 
 
@@ -116,6 +114,22 @@ def search_for_book():
     books = find_book(name)
     return jsonify(books)
 
+
+@app.route("/api/book/check")
+def check_book():
+    if not request.args:
+        abort(406)
+    if 'book_id' not in request.args:
+        abort(406)
+
+    book_id = request.args['book_id']
+    try:
+        res = get_book_by_id(book_id)
+        if res is None:
+            return jsonify({'status' : False })
+        return jsonify({'status': True})
+    except:
+        abort(500)
 
 if __name__ == '__main__':
     app.run(port=8083)

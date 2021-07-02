@@ -1,4 +1,5 @@
 {
-  "create_profile" : "http://localhost:8082/api/profile/create_profile"
+  "create_profile" : "http://localhost:8082/api/profile/create_profile",
+  "is_book_exists" : "http://localhost:8083/api/book/check"
 }
 

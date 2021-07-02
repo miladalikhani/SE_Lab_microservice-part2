@@ -1,4 +1,6 @@
 import sqlite3
+from datetime import datetime
+
 from flask import g
 
 DATABASE = 'orders.db'
@@ -40,7 +42,15 @@ def initialize_db():
         id integer primary key,
         username text not null,
         book_id id not null,
+        checkout_date timestamp not null,
         status text not null
     );
     """)
+
+
+def submit_new_order(username, book_id):
+    query_db("""
+        insert into orders (username, book_id, checkout_date, status)
+        values ( ? , ? , ? , "submit" );
+    """, [username, book_id, datetime.now()], commit=True)
 
