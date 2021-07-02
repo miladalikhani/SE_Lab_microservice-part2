@@ -2,7 +2,7 @@ from flask import Flask, abort, request, make_response, jsonify
 import requests
 
 from book.dbcon import initialize_db, close_connection, is_book_exists, add_book, get_book_by_id, update_book, \
-    delete_book
+    delete_book, get_books_of_category, find_book
 
 app = Flask(__name__)
 
@@ -85,6 +85,33 @@ def remove_book():
         return jsonify({})
     except:
         abort(500)
+
+
+@app.route("/api/book/books_of_category")
+def view_books_of_category():
+    headers = request.headers
+    if 'username' not in headers or 'role' not in headers:
+        abort(401)
+    if headers['role'] not in ('admin', 'user'):
+        abort(401)
+    if 'category' not in request.args:
+        abort(406)
+    category = request.args.get('category')
+    books = get_books_of_category(category)
+    return jsonify(books)
+
+@app.route("/api/book/search")
+def search_for_book():
+    headers = request.headers
+    if 'username' not in headers or 'role' not in headers:
+        abort(401)
+    if headers['role'] not in ('admin', 'user'):
+        abort(401)
+    name = ""
+    if 'q' in request.args:
+        name = request.args.get('q')
+    books = find_book(name)
+    return jsonify(books)
 
 
 if __name__ == '__main__':

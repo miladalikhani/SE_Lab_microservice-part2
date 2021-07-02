@@ -7,6 +7,8 @@
   "api/profile/profiles" : "http://localhost:8082/api/profile/profiles",
   "api/book/create_book" : "http://localhost:8083/api/book/create_book",
   "api/book/update_book" : "http://localhost:8083/api/book/update_book",
-  "api/book/remove_book" : "http://localhost:8083/api/book/remove_book"
+  "api/book/remove_book" : "http://localhost:8083/api/book/remove_book",
+  "api/book/books_of_category" : "http://localhost:8083/api/book/books_of_category",
+  "api/book/search" : "http://localhost:8083/api/book/search"
 }
 

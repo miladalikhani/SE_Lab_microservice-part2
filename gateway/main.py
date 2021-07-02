@@ -19,7 +19,7 @@ def load_endpoints():
 
 def send_request(endpoint, headers):
     if request.method == 'GET':
-        res = requests.get(endpoint, headers=headers)
+        res = requests.get(endpoint, headers=headers,params=request.args)
         return res
     elif request.method == 'POST':
         res = requests.post(endpoint, headers=headers, json=request.json)

@@ -76,6 +76,20 @@ def delete_book(id):
     where id = ?
     """, [id], commit=True)
 
+def get_books_of_category(category):
+    res = query_db("""
+    select id, name from books
+    where category = ?
+    """, [category])
+    return res
+
+def find_book(name):
+    res = query_db("""
+    select * from books
+    where name like ?
+    """, ['%' + name + '%'])
+    return res
+
 def add_book(name, category):
         query_db("""
         insert into books (name, category)
