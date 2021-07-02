@@ -51,7 +51,8 @@ def modify_book():
     if not request.json:
         abort(406)
     book_data = request.json
-    if not book_data.get('id') or not book_data.get('name') or not book_data.get('category') or not book_data.get(
+    if not book_data.get('id') or not book_data.get('name') or not book_data.get('category') or \
+            not book_data.get(
             'price'):
         abort(406)
     book_id = book_data.get('id')

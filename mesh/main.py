@@ -19,7 +19,7 @@ def load_endpoints():
 
 def send_request(endpoint):
     if request.method == 'GET':
-        res = requests.get(endpoint,params=request.args)
+        res = requests.get(endpoint, params=request.args)
         return res
     elif request.method == 'POST':
         res = requests.post(endpoint, json=request.json)
@@ -50,6 +50,7 @@ def mesh():
         abort(response.status_code)
     res = make_response(jsonify(response.json()))
     return res
+
 
 if __name__ == '__main__':
     app.run(port=8090)
