@@ -42,15 +42,31 @@ def initialize_db():
         id integer primary key,
         username text not null,
         book_id id not null,
+        book_name text not null,
+        price integer not null,
         checkout_date timestamp not null,
         status text not null
     );
     """)
 
 
-def submit_new_order(username, book_id):
+def submit_new_order(username, book_id, book_name, price):
     query_db("""
-        insert into orders (username, book_id, checkout_date, status)
-        values ( ? , ? , ? , "submit" );
-    """, [username, book_id, datetime.now()], commit=True)
+        insert into orders (username, book_id, book_name, price, checkout_date, status)
+        values ( ? , ? , ? , ? , ? , "submit" );
+    """, [username, book_id, book_name, price, datetime.now()], commit=True)
 
+def view_user_orders(username):
+    res = query_db("""
+    select book_name, price, checkout_date from orders
+    where username like ?
+    order by checkout_date desc;
+    """, [username])
+    return res
+
+def view_all_orders():
+    res = query_db("""
+    select username, book_id, book_name, price, checkout_date from orders
+    order by username, checkout_date desc;
+    """, [])
+    return res

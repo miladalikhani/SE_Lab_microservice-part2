@@ -10,6 +10,8 @@
   "api/book/remove_book" : "http://localhost:8083/api/book/remove_book",
   "api/book/books_of_category" : "http://localhost:8083/api/book/books_of_category",
   "api/book/search" : "http://localhost:8083/api/book/search",
-  "api/orders/submit_order" : "http://localhost:8084/api/orders/submit_order"
+  "api/orders/submit_order" : "http://localhost:8084/api/orders/submit_order",
+  "api/orders/my_orders" : "http://localhost:8084/api/orders/my_orders",
+  "api/orders/all" : "http://localhost:8084/api/orders/all"
 }
 

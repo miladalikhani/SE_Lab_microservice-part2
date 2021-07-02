@@ -1,12 +1,12 @@
 from flask import Flask, abort, request, make_response, jsonify
 import requests
 
-from orders.dbcon import submit_new_order, initialize_db, close_connection
+from orders.dbcon import submit_new_order, initialize_db, close_connection, view_user_orders, view_all_orders
 
 app = Flask(__name__)
 
-
 mesh_endpoint = "http://localhost:8090/mesh"
+
 
 @app.before_first_request
 def initialize():
@@ -16,6 +16,7 @@ def initialize():
 @app.teardown_appcontext
 def teardown(exception):
     close_connection()
+
 
 @app.route("/api/orders/submit_order", methods=['POST'])
 def submit_order():
@@ -41,11 +42,40 @@ def submit_order():
     if not res.json()['status']:
         abort(406)
     try:
-        submit_new_order(username, book_id)
+        book_name = res.json()['name']
+        price = res.json()['price']
+        submit_new_order(username, book_id, book_name, price)
         return jsonify({})
     except:
         abort(500)
 
+
+@app.route("/api/orders/my_orders")
+def view_my_order():
+    headers = request.headers
+    if 'username' not in headers or 'role' not in headers:
+        abort(401)
+    if headers['role'] != 'user':
+        abort(401)
+    username = headers['username']
+    try:
+        res = view_user_orders(username)
+        return jsonify(res)
+    except:
+        abort(500)
+
+@app.route("/api/orders/all")
+def all_orders():
+    headers = request.headers
+    if 'username' not in headers or 'role' not in headers:
+        abort(401)
+    if headers['role'] != 'admin':
+        abort(401)
+    try:
+        res = view_all_orders()
+        return jsonify(res)
+    except:
+        abort(500)
 
 if __name__ == '__main__':
     app.run(port=8084)

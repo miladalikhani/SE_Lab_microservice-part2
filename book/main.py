@@ -35,7 +35,7 @@ def create_book():
     if is_book_exists(book_name, book_category):
         abort(409)
     try:
-        book = add_book(book_name, book_category,book_price)
+        book = add_book(book_name, book_category, book_price)
         return jsonify(book)
     except:
         abort(500)
@@ -51,7 +51,8 @@ def modify_book():
     if not request.json:
         abort(406)
     book_data = request.json
-    if not book_data.get('id') or not book_data.get('name') or not book_data.get('category') or not book_data.get('price'):
+    if not book_data.get('id') or not book_data.get('name') or not book_data.get('category') or not book_data.get(
+            'price'):
         abort(406)
     book_id = book_data.get('id')
     book_name = book_data.get('name')
@@ -76,7 +77,7 @@ def remove_book():
     if not request.json:
         abort(406)
     book_data = request.json
-    if not book_data.get('id') :
+    if not book_data.get('id'):
         abort(406)
     book_id = book_data.get('id')
     if get_book_by_id(book_id) is None:
@@ -100,6 +101,7 @@ def view_books_of_category():
     category = request.args.get('category')
     books = get_books_of_category(category)
     return jsonify(books)
+
 
 @app.route("/api/book/search")
 def search_for_book():
@@ -126,10 +128,13 @@ def check_book():
     try:
         res = get_book_by_id(book_id)
         if res is None:
-            return jsonify({'status' : False })
-        return jsonify({'status': True})
+            return jsonify({'status': False})
+        res_json = {'status': True, 'id': book_id, 'name': res['name'], 'category': res['category'],
+                    'price': res['price']}
+        return jsonify(res_json)
     except:
         abort(500)
+
 
 if __name__ == '__main__':
     app.run(port=8083)

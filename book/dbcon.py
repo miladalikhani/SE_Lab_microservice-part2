@@ -58,7 +58,7 @@ def is_book_exists(name, category):
 
 def get_book_by_id(id):
     res = query_db("""
-    select name, category from books
+    select name, category, price from books
     where id = ? ;
     """, [id], one=True)
     return res
