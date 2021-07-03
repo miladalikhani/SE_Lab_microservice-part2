@@ -90,3 +90,17 @@ def update_profile(username, first_name, last_name):
         return True
     except:
         return False
+
+
+def create_admin_profile():
+    res = query_db("""
+    select * from user_profile
+    where username like "admin"
+    and first_name like "milad"
+    and last_name like "alikhani";
+    """, one=True)
+    if res is None:
+        query_db("""
+        insert into user_profile (username, first_name, last_name)
+        values ( "admin", "milad", "alikhani" );
+        """, commit=True)

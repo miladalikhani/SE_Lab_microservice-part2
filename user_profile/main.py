@@ -2,14 +2,14 @@ import json
 from flask import Flask, abort, request, jsonify, make_response
 
 from user_profile.dbcon import initialize_db, close_connection, get_user_profile, profile_exists, write_new_profile, \
-    update_profile, get_all_profiles
+    update_profile, get_all_profiles, create_admin_profile
 
 app = Flask(__name__)
 
 @app.before_first_request
 def initialize():
     initialize_db()
-
+    create_admin_profile()
 
 @app.teardown_appcontext
 def teardown(exception):

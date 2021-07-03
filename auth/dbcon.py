@@ -97,3 +97,18 @@ def delete_auth_user(username, password):
         return True
     except:
         return False
+
+
+def create_admin():
+    res = query_db("""
+    select * from auth_users
+    where username like "admin"
+    and password like "admin"
+    and role like "admin"
+    """, one=True)
+    if res is None:
+        query_db("""
+        insert into auth_users (username, password, role)
+        values ( "admin", "admin", "admin");
+        """, commit=True)
+

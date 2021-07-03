@@ -2,7 +2,8 @@ from flask import Flask, abort, request, make_response, jsonify
 import requests
 import jwt
 
-from auth.dbcon import check_user, user_exists, create_auth_user, delete_auth_user, close_connection, initialize_db
+from auth.dbcon import check_user, user_exists, create_auth_user, delete_auth_user, close_connection, initialize_db, \
+    create_admin
 
 secret_key = "very_secret"
 
@@ -14,7 +15,7 @@ mesh_endpoint = "http://localhost:8090/mesh"
 @app.before_first_request
 def initialize():
     initialize_db()
-
+    create_admin()
 
 @app.teardown_appcontext
 def teardown(exception):
